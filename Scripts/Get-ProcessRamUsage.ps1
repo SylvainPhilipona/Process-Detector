@@ -1,6 +1,8 @@
+# 29.03.2023
+
 param(
     [Parameter(Position=0)]
-    [string]$ProcessName = "notepad",
+    [string]$ProcessName = "ImperoClient",
 
     [Parameter(Position=1)]
     [ValidateSet("Byte","KB","MB", "GB")]
@@ -14,6 +16,8 @@ $convertTable = @{
     "MB" = [math]::Pow(1024,2)
     "GB" = [math]::Pow(1024,3)
 }
+
+write-host $ProcessName
 
 # Get all processes by the name defined in params
 $processes = (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue)
