@@ -11,7 +11,7 @@ $Config = .\Configs.ps1
 # This notification allow the user to stop the script when the console is hidden
 Add-Type -AssemblyName System.Windows.Forms
 $notification = New-Object System.Windows.Forms.NotifyIcon
-$notification.Icon = "C:\Users\sylphilipona\Downloads\Sebastien.ico"
+$notification.Icon = [convert]::FromBase64String($Config.Icon)
 $notification.add_Click{
     $notification.Dispose()
     $global:stop = $true
