@@ -17,14 +17,12 @@ $convertTable = @{
     "GB" = [math]::Pow(1024,3)
 }
 
-write-host $ProcessName
-
 # Get all processes by the name defined in params
 $processes = (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue)
 
 # Check if the process defined in params exists
 if($processes.Count -eq 0){
-    return "Aucun process"
+    return 0
 }
 
 # Return an array of all processes RAM consumption
