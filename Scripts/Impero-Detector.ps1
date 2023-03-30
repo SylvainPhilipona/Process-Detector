@@ -1,4 +1,4 @@
-# Configs
+﻿# Configs
 $Config = .\Configs.ps1
 
 # Variables
@@ -23,7 +23,7 @@ $notification.Visible = $true
 while(!($global:stop)){
 
     # Get the ram usage of the parameters defined process
-    $RamUsage = [float](.\Get-ProcessRamUsage.ps1 -ProcessName $Config.Conf.Name -Unit $Config.Conf.Unit)[0]
+    $RamUsage = [float](.\Get-ProcessRamUsage.ps1 -ProcessName $Config.Data.Name -Unit $Config.Data.Unit)[0]
 
     # On the first iteration do nothing
     # Otherrise the augentation from 0 to the ram usage will be instant detected
@@ -41,9 +41,8 @@ while(!($global:stop)){
     #   Usual usage               : ~ 213-218 MB
     #   Usage on screen recording : 
     # 
-    if(.\Test-Augmentation.ps1 -OldValue $OldValue -NewValue $RamUsage -MinDelta $Config.Conf.MinDelta){
+    if(.\Test-Augmentation.ps1 -OldValue $OldValue -NewValue $RamUsage -MinDelta $Config.Data.MinDelta){
         Write-Host "Augmentation de l'utilisation de la ram --> $RamUsage" -ForegroundColor Green
-
 
         .\Start-FakeWebPage.ps1 -Website $Config.Trigger.Website -Browser $Config.Trigger.Browser
         # [System.Windows.Forms.MessageBox]::Show("Attention!")
@@ -55,5 +54,5 @@ while(!($global:stop)){
     # Set the old value as current.
     # So in the next iteration the current value will be the last iteration value
     $OldValue = $RamUsage
-    Start-Sleep -Milliseconds $Config.Conf.IterationDuration
+    Start-Sleep -Milliseconds $Config.Data.IterationDuration
 }

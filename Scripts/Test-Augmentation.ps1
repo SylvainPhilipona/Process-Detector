@@ -1,4 +1,4 @@
-<#
+﻿<#
 .NOTES
     *****************************************************************************
     Name:	Test-Augmentation.ps1
@@ -6,9 +6,9 @@
     Date:	29.03.2023
  	*****************************************************************************
     Modifications
- 	Date  : 
- 	Author: 
- 	Reason: 
+ 	Date  : 30.03.2023
+ 	Author: Sylvain Philipona
+ 	Reason: UTF-8 with BOM encoding
  	*****************************************************************************
 .SYNOPSIS
     Test the value augmentation

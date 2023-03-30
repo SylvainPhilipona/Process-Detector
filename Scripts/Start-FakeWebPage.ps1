@@ -1,4 +1,4 @@
-<#
+﻿<#
 .NOTES
     *****************************************************************************
     Name:	Start-FakeWebPage.ps1
@@ -6,9 +6,9 @@
     Date:	29.03.2023
  	*****************************************************************************
     Modifications
- 	Date  : 
- 	Author: 
- 	Reason: 
+ 	Date  : 30.03.2023
+ 	Author: Sylvain Philipona
+ 	Reason: UTF-8 with BOM encoding
  	*****************************************************************************
 .SYNOPSIS
     Open a webpage on eachs monitors
@@ -42,14 +42,18 @@ param(
 
     [Parameter(Position=1)]
     [ValidateSet("chrome","msedge")]
-    [string]$Browser = "chrome"
+    [string]$Browser = "chrome",
+
+    [Parameter(Position=3)]
+    [switch]$WhatIf
 )
 
 # Load the windows form assembly and obtains all monitors connected to the computer
 Add-Type -AssemblyName System.Windows.Forms
-$screens = [System.Windows.Forms.Screen]::AllScreens | Select-Object primary, workingarea
+$screens = @([System.Windows.Forms.Screen]::AllScreens | Select-Object primary, workingarea)
 
 # Open a web browser on each monitor
+[bool]$completed = $true
 $screens | ForEach-Object{
 
     # Obtains X and Y position of the monitor
@@ -60,5 +64,12 @@ $screens | ForEach-Object{
     # The arguments ensure that the browser is opened in a new window, in full-screen mode, in a separate user data directory for each monitor.
     # At the correct X and Y positions on the screen. 
     # The website to be opened is specified by the $Website variable
-    Start-Process $Browser ("--new-window",  "--start-fullscreen", "--user-data-dir=c:/screen$i","--window-position=$x,$y", $Website)
+    try{
+        Start-Process $Browser ("--new-window",  "--start-fullscreen", "--user-data-dir=c:/screen$i","--window-position=$x,$y", $Website) -ErrorAction Stop
+    }
+    catch{
+        $completed = $false
+    }
 }
+
+return $completed

@@ -1,9 +1,9 @@
-return [PSCustomObject]@{
-    Conf = @{
+﻿return [PSCustomObject]@{
+    Data = @{
         Name = "ImperoClient"
         MinDelta = 5
         Unit = "MB"
-        IterationDuration = 300
+        IterationDuration = 300 # Value in milliseconds
     }
 
     Trigger = @{

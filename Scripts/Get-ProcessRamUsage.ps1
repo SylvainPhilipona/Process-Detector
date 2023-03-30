@@ -1,4 +1,4 @@
-<#
+﻿<#
 .NOTES
     *****************************************************************************
     Name:	Get-ProcessRamUsage.ps1
@@ -6,9 +6,9 @@
     Date:	29.03.2023
  	*****************************************************************************
     Modifications
- 	Date  : 
- 	Author: 
- 	Reason: 
+ 	Date  : 30.03.2023
+ 	Author: Sylvain Philipona
+ 	Reason: UTF-8 with BOM encoding
  	*****************************************************************************
 .SYNOPSIS
     Get the ram usage of a process
