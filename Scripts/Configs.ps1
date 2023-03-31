@@ -33,7 +33,7 @@ return [PSCustomObject]@{
         Name = "ImperoClient"
         MinDelta = 20
         Unit = "MB"
-        IterationDuration = 300 # Value in milliseconds
+        IterationDuration = 300
     }
 
     Trigger = @{

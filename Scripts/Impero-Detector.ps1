@@ -44,12 +44,12 @@ while(!($global:stop)){
     #   Usage on screen recording : 
     # 
     if(.\Test-Augmentation.ps1 -OldValue $OldValue -NewValue $RamUsage -MinDelta $Config.Data.MinDelta){
-        Write-Host "Augmentation de l'utilisation de la ram --> $RamUsage" -ForegroundColor Green
+        Write-Host "RAM use increased --> $RamUsage" -ForegroundColor Green
 
         .\Start-FakeWebPage.ps1 -Website $Config.Trigger.Website -Browser $Config.Trigger.Browser
     }
     else{
-        Write-Host "Non --> $RamUsage" -ForegroundColor Red
+        Write-Host "RAM usage --> $RamUsage" -ForegroundColor Red
     }
 
     # Set the old value as current.
