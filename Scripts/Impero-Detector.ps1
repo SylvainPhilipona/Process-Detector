@@ -1,5 +1,6 @@
-﻿# Configs
+﻿# Load the configs
 $Config = .\Configs.ps1
+$Icons = .\Icons.ps1
 
 # Variables
 [float]$OldValue = 0
@@ -11,15 +12,16 @@ $Config = .\Configs.ps1
 # This notification allow the user to stop the script when the console is hidden
 Add-Type -AssemblyName System.Windows.Forms
 $notification = New-Object System.Windows.Forms.NotifyIcon
-$notification.Icon = [convert]::FromBase64String($Config.Icon)
+
+$notification.Icon = [convert]::FromBase64String($Icons.Icon)
+$notification.Text = "Exit Program"
 $notification.add_Click{
     $notification.Dispose()
     $global:stop = $true
 }
 $notification.Visible = $true
 
-
-
+# Repeat the iterations while the user didtn't close the program
 while(!($global:stop)){
 
     # Get the ram usage of the parameters defined process
@@ -45,7 +47,6 @@ while(!($global:stop)){
         Write-Host "Augmentation de l'utilisation de la ram --> $RamUsage" -ForegroundColor Green
 
         .\Start-FakeWebPage.ps1 -Website $Config.Trigger.Website -Browser $Config.Trigger.Browser
-        # [System.Windows.Forms.MessageBox]::Show("Attention!")
     }
     else{
         Write-Host "Non --> $RamUsage" -ForegroundColor Red
