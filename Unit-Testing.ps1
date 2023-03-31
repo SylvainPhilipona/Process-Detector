@@ -55,9 +55,9 @@ Describe "Impero-Detector"{
 }
 
 Describe "Start-FakeWebPage"{
-    # It "Chrome + etml.ch = True"{
-    #     .\Scripts\Start-FakeWebPage.ps1 -Browser chrome -WebsIte etml.ch | Should Be True
-    # }
+    It "Start 1 process by monitors = 3"{
+        (.\Scripts\Start-FakeWebPage.ps1 -Browser chrome -WebsIte etml.ch -WhatIf).Count | Should Be 3
+    }
 }
 
 Describe "Test-Augmentation" {
@@ -75,5 +75,5 @@ Describe "Test-Augmentation" {
 }
 
 Describe "Compile-Project"{
-
+    
 }

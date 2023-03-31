@@ -6,9 +6,9 @@
     Date:	29.03.2023
  	*****************************************************************************
     Modifications
- 	Date  : 30.03.2023
+ 	Date  : 31.03.2023
  	Author: Sylvain Philipona
- 	Reason: UTF-8 with BOM encoding
+ 	Reason: Added WhatIf param
  	*****************************************************************************
 .SYNOPSIS
     Open a webpage on eachs monitors
@@ -22,6 +22,9 @@
 
 .PARAMETER Browser
     The web browser that will be use to open the website
+
+.PARAMETER WhatIf
+    Used to test the execution of the script
  	
 .OUTPUTS
 	- Create 1 web browser window on fullscreen and on each monitors
@@ -52,6 +55,9 @@ param(
 Add-Type -AssemblyName System.Windows.Forms
 $screens = @([System.Windows.Forms.Screen]::AllScreens | Select-Object primary, workingarea)
 
+# Used with WhatIf
+$processes = @()
+
 # Open a web browser on each monitor
 [bool]$completed = $true
 $screens | ForEach-Object{
@@ -65,11 +71,20 @@ $screens | ForEach-Object{
     # At the correct X and Y positions on the screen. 
     # The website to be opened is specified by the $Website variable
     try{
-        Start-Process $Browser ("--new-window",  "--start-fullscreen", "--user-data-dir=c:/screen$i","--window-position=$x,$y", $Website) -ErrorAction Stop
+        if($WhatIf){
+            $processes += (Start-Process $Browser ("--headless",  "--disable-gpu") -PassThru)
+        }
+        else{
+            Start-Process $Browser ("--new-window",  "--start-fullscreen", "--user-data-dir=c:/screen$i","--window-position=$x,$y", $Website) -ErrorAction Stop
+        }
     }
     catch{
         $completed = $false
     }
+}
+
+if($WhatIf){
+    return $processes
 }
 
 return $completed
