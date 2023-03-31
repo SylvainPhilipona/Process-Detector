@@ -8,7 +8,7 @@
     Modifications
  	Date  : 31.03.2023
  	Author: Sylvain Philipona
- 	Reason: Code optimisation
+ 	Reason: Code optimisation + Removing comments from compiled script
  	*****************************************************************************
 .SYNOPSIS
     Compiles all script files into 1
@@ -49,11 +49,46 @@ param (
     [string]$outputPath = "./Impero-Detector"
 )
 
+# Remove all code comments
+function Remove-Comments{
+    param(
+        [string]$ContentWithComments
+    )
+
+    # you can use the replace() method but if you need to match and replace anything more advanced, always use the replace operator
+    $ContentWithComments = $ContentWithComments -replace "(?<=\<#)((.|\n)*)(?=\#>)", ""
+    $ContentWithComments = $ContentWithComments.Replace("<##>", "")
+    $ContentWithComments = $ContentWithComments -replace "#.*", " "
+    $ContentWithComments = $ContentWithComments.Replace("`n", "")
+
+    return $ContentWithComments
+}
+
+# Remove all ".\" and ".ps1". Because in the files the scripts are called like this ".\My-Function.ps1" and when wrapped like this "My-Function"
+function Format-Script {
+    param (
+        [string]$ScriptFullPath,
+        [string]$ScriptName
+    )
+
+    $content = ""
+    $content += "Function $($ScriptName.Replace('.ps1', '')) {"
+    $content += [IO.File]::ReadAllText($ScriptFullPath)
+    $content += "}"
+
+    $content = $content.Replace(".\", "")
+    $content = $content.Replace(".ps1", "")
+    $content = Remove-Comments -ContentWithComments $content
+
+    return $content
+}
+
 # Get all scripts from the path
 # Except the configs and main scripts
 $scripts = Get-ChildItem -Path $scriptsPath -Filter *.ps1 -Exclude @($MainScript, $ConfigsScripts).Split() -Recurse
 
 # Create the Output folder and move to it
+Remove-Item $outputPath -Force -Recurse -ErrorAction SilentlyContinue
 New-Item $outputPath -ItemType Directory -Force | Out-Null
 Set-Location $outputPath
 
@@ -61,19 +96,21 @@ Set-Location $outputPath
 # Remove all ".\" and ".ps1". Because in the files the scripts are called like this ".\My-Function.ps1" and when wrapped like this "My-Function"
 # The result will be output in a file 
 $wrapContent = ""
+
+# Format all configs files
 foreach($conf in $ConfigsScripts){
-    $wrapContent += "Function $($conf.Replace('.ps1', '')) {"
-    $wrapContent += [IO.File]::ReadAllText("$scriptsPath\$conf").Replace(".\", "").Replace(".ps1", "")
-    $wrapContent += "}"
+    $wrapContent += Format-Script -ScriptFullPath "$scriptsPath\$conf" -ScriptName $conf 
 }
 
+# Format all scripts files
 foreach($script in $scripts){
-    $wrapContent += "Function $($script.Name.Replace('.ps1', '')) {"
-    $wrapContent +=     [IO.File]::ReadAllText($script.FullName).Replace(".\", "").Replace(".ps1", "")
-    $wrapContent += "}"
+    $wrapContent += Format-Script -ScriptFullPath "$script" -ScriptName $script.Name
 }
 
+# Format the main file
 $wrapContent += [IO.File]::ReadAllText("$scriptsPath\$MainScript").Replace(".\", "").Replace(".ps1", "")
+
+# Compile the content
 $wrapContent >> $Compiled
 
 # Create the launch file
