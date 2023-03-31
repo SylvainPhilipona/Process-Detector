@@ -30,7 +30,7 @@ If you want to change the project configuration, you can do it in the file .\Scr
 ![image](https://user-images.githubusercontent.com/87760278/229087848-f6c27fe8-b5d8-477f-955b-5089d3fd1a6e.png)<br>
 
 You can change any values you want.
-```
+```PowerShell
 return [PSCustomObject]@{
     Data = @{
         Name = "ImperoClient"
