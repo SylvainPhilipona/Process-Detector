@@ -1,8 +1,8 @@
 # Impero-Detector
 This program detect the use of the software "IMPERO" with a powershell script.
 
-The program read the amount of RAM that the process 'ImperoClient' uses. This is done evry 300ms.<br>
-The RAM use is compare with the value of the last iteration to detect an increase.<br>
+The program read the amount of RAM that the process 'ImperoClient' uses. This is done every 300ms.<br>
+The RAM in use is compared with the value of the last iteration to detect an increase.<br>
 ![image](https://user-images.githubusercontent.com/87760278/229086202-7d244a61-5eac-4829-926a-2af31dcc6587.png)<br>
 
 When an increase is detected, the script launch in fullscreen on each monitors a web-browser with a website opened.<br>
