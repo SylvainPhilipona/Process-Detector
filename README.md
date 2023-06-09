@@ -21,14 +21,14 @@ The first step is to download the program from this GitHub.<br>
 Once downloaded and un-zipped you will find the folder 'Process-Detector'.<br>
 You can copy this folder wherever you want.<br>
 To execute the program you just have to double-click on the 'start.bat' file.<br>
-![image](https://user-images.githubusercontent.com/87760278/229080477-7bfdb16c-7214-4201-9e09-7291ac700a27.png)
+![image](https://github.com/SylvainPhilipona/Process-Detector/assets/87760278/202c56cf-39b7-4e72-bc79-0a835719dcb8)
 <img src="https://user-images.githubusercontent.com/87760278/229081461-717e4b11-afc9-45a4-a92d-1a9e19e459a7.png" width="10%" height="10%"></img>
-![image](https://user-images.githubusercontent.com/87760278/229082092-d3e8bb10-f278-4a25-8de6-db12562c3f98.png)<br><br>
+![image](https://github.com/SylvainPhilipona/Process-Detector/assets/87760278/d345a1c9-0d0c-4875-895b-e03613fc22f2)<br><br>
 
 
 # How to change configurations
 If you want to change the project configuration, you can do it in the file .\Scripts\Configs.ps1.<br>
-![image](https://user-images.githubusercontent.com/87760278/229087848-f6c27fe8-b5d8-477f-955b-5089d3fd1a6e.png)<br>
+![image](https://github.com/SylvainPhilipona/Process-Detector/assets/87760278/be5e595f-a854-4eff-a567-966fc76e8c68)<br>
 
 You can change any values you want.<br>
 All data are examples
@@ -49,5 +49,5 @@ return [PSCustomObject]@{
 }
 ```
 After you did your changes, you will have te recompile the project.<br>
-To do this you just have to execute the script 'Compile-Project.ps1'. It will update the project with your new configs.
-![image](https://user-images.githubusercontent.com/87760278/229089529-5fdeca86-4f2a-4350-b294-25931b87e27b.png)
+To do this you just have to execute the script 'Compile-Project.ps1'. It will update the project with your new configs.<br>
+![image](https://github.com/SylvainPhilipona/Process-Detector/assets/87760278/6bd668ed-1609-4b27-884a-2f52154e779f)
