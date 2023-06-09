@@ -1,7 +1,7 @@
-# Impero-Detector
-This program detect the use of the software "IMPERO" with a powershell script.
+# Process-Detector
+This program detect the use of a specific software with a powershell script.
 
-The program read the amount of RAM that the process 'ImperoClient' uses. This is done every 300ms.<br>
+The program read the amount of RAM usage that the process from a software uses. This is done every 300ms.<br>
 The RAM in use is compared with the value of the last iteration to detect an increase.<br>
 ![image](https://user-images.githubusercontent.com/87760278/229086202-7d244a61-5eac-4829-926a-2af31dcc6587.png)<br>
 
@@ -17,7 +17,7 @@ With this icon you can easily stop the script execution at any moment.<br>
 
 # How to use this project
 The first step is to download the program from this GitHub.<br>
-Once downloaded and un-zipped you will find the folder 'Impero-Detector'.<br>
+Once downloaded and un-zipped you will find the folder 'Process-Detector'.<br>
 You can copy this folder wherever you want.<br>
 To execute the program you just have to double-click on the 'start.bat' file.<br>
 ![image](https://user-images.githubusercontent.com/87760278/229080477-7bfdb16c-7214-4201-9e09-7291ac700a27.png)
@@ -33,7 +33,7 @@ You can change any values you want.
 ```PowerShell
 return [PSCustomObject]@{
     Data = @{
-        Name = "ImperoClient"
+        Name = "ImperoClient" # As an example
         MinDelta = 20
         Unit = "MB"
         IterationDuration = 300
