@@ -42,11 +42,11 @@
 
 # Script parameters
 param (
-    [string]$Compiled = "Impero-Detector.ps1",
-    [string]$MainScript = "Impero-Detector.ps1",
+    [string]$Compiled = "Process-Detector.ps1",
+    [string]$MainScript = "Process-Detector.ps1",
     [string[]]$ConfigsScripts = @("Configs.ps1", "Icons.ps1"),
     [string]$scriptsPath = "./Scripts",
-    [string]$outputPath = "./Impero-Detector"
+    [string]$outputPath = "./Process-Detector"
 )
 
 # Remove all code comments

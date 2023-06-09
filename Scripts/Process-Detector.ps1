@@ -21,6 +21,11 @@ $notification.add_Click{
 }
 $notification.Visible = $true
 
+# Timeout number of iterations
+$timeoutNbIterations = $Config.Trigger.Timeout / $Config.Data.IterationDuration
+$timeoutCount = 0
+$isTimeout = $false
+
 # Repeat the iterations while the user didtn't close the program
 while(!($global:stop)){
 
@@ -35,22 +40,39 @@ while(!($global:stop)){
         continue
     }
 
-    # Test if the ram usage has augmented from the last iteration
-    # The MinDelta is the minimum augmentation that we will detect
-    # The usual usage depand of the PC. The values are the ones detected on my PC
-    # However the augmentation seems to be the same no matter what computer
-    # This value is calibrated by tests
-    #   Usual usage               : ~ 213-218 MB
-    #   Usage on screen recording : 
-    # 
-    if(.\Test-Augmentation.ps1 -OldValue $OldValue -NewValue $RamUsage -MinDelta $Config.Data.MinDelta){
-        Write-Host "RAM use increased --> $RamUsage" -ForegroundColor Green
+    # Check if the timeout iterations has reach the end
+    if($timeoutCount -ge $timeoutNbIterations){
+        $isTimeout = $false
+        $timeoutCount = 0
+    }
 
-        .\Start-FakeWebPage.ps1 -Website $Config.Trigger.Website -Browser $Config.Trigger.Browser
+    # Check if the execution is in timeout
+    if(!$isTimeout){
+
+        # Test if the ram usage has augmented from the last iteration
+        # The MinDelta is the minimum augmentation that we will detect
+        # The usual usage depand of the PC. The values are the ones detected on my PC
+        # However the augmentation seems to be the same no matter what computer
+        # This value is calibrated by tests
+        #   Usual usage               : ~ 213-218 MB
+        #   Usage on screen recording : ~ 238-240 MB
+        # 
+        if(.\Test-Augmentation.ps1 -OldValue $OldValue -NewValue $RamUsage -MinDelta $Config.Data.MinDelta){
+            Write-Host "RAM use increased --> $RamUsage" -ForegroundColor Green
+
+            .\Start-FakeWebPage.ps1 -Website $Config.Trigger.Website -Browser $Config.Trigger.Browser
+            $isTimeout = $true
+        }
+        else{
+            Write-Host "RAM usage --> $RamUsage" -ForegroundColor Red
+        }
     }
     else{
-        Write-Host "RAM usage --> $RamUsage" -ForegroundColor Red
+
+        Write-Host "In timeout" -ForegroundColor Magenta
+        $timeoutCount++
     }
+    
 
     # Set the old value as current.
     # So in the next iteration the current value will be the last iteration value

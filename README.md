@@ -1,4 +1,5 @@
 # Process-Detector
+## Be aware that this software is a proof of concept and is intended for educational use only.
 This program detect the use of a specific software with a powershell script.
 
 The program read the amount of RAM usage that the process from a software uses. This is done every 300ms.<br>
@@ -29,19 +30,21 @@ To execute the program you just have to double-click on the 'start.bat' file.<br
 If you want to change the project configuration, you can do it in the file .\Scripts\Configs.ps1.<br>
 ![image](https://user-images.githubusercontent.com/87760278/229087848-f6c27fe8-b5d8-477f-955b-5089d3fd1a6e.png)<br>
 
-You can change any values you want.
+You can change any values you want.<br>
+All data are examples
 ```PowerShell
 return [PSCustomObject]@{
     Data = @{
-        Name = "ImperoClient" # As an example
-        MinDelta = 20
+        Name = "ImperoClient"
+        MinDelta = 10
         Unit = "MB"
         IterationDuration = 300
     }
 
     Trigger = @{
         Browser = "msedge"
-        Website = "www.joca.ch"
+        Website = "https://enseignement.section-inf.ch/"
+        Timeout = 5000
     }
 }
 ```

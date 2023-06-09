@@ -15,6 +15,7 @@
  	
 .DESCRIPTION
     This file contains all mandatiry configs for the project to work
+    The values are an example
  	
 .OUTPUTS
 	An PSCustomObject that contains all configs
@@ -31,13 +32,14 @@
 return [PSCustomObject]@{
     Data = @{
         Name = "ImperoClient"
-        MinDelta = 20
+        MinDelta = 10
         Unit = "MB"
         IterationDuration = 300
     }
 
     Trigger = @{
         Browser = "msedge"
-        Website = "www.joca.ch"
+        Website = "https://enseignement.section-inf.ch/"
+        Timeout = 5000
     }
 }
